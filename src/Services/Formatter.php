@@ -10,7 +10,7 @@ use InvalidArgumentException;
 class Formatter
 {
     protected $formatters = [
-        'csv' => CSVVistor::class,
+        'csv' => CSVVisitor::class,
         'xml' => XMLVisitor::class,
     ];
 
