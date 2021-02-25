@@ -4,23 +4,26 @@
 namespace App\Services;
 
 
-use http\Exception\InvalidArgumentException;
+
+use InvalidArgumentException;
 
 class Formatter
 {
+    protected $formatters = [
+        'csv' => CSVVistor::class,
+        'xml' => XMLVisitor::class,
+    ];
+
     public function formatAs(array $items, string $format): string
     {
         $format = strtolower($format);
 
-        if ($format === 'csv') {
-            $result = (new CSVVistor($items))->execute();
-        } elseif ($format === 'xml') {
-            $result = (new XMLVisitor($items))->execute();
-        } else {
-            throw new InvalidArgumentException("Format {$format} is not supported");
+        if (array_key_exists($format, $this->formatters)) {
+            $formatterClass = $this->formatters[$format];
+
+            return (new $formatterClass($items))->execute();
         }
 
-
-        return $result;
+        throw new InvalidArgumentException("Format {$format} is not supported");
     }
 }
