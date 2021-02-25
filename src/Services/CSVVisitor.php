@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Models\Book;
 use App\Models\Post;
 
-class CSVVistor extends Visitor
+class CSVVisitor extends Visitor
 {
 
     public function convertBook(Book $book): string
