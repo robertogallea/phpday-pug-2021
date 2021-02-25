@@ -22,11 +22,8 @@ abstract class Visitor
         $result = '';
 
         foreach ($this->items as $item) {
-            if ($item instanceof Book) {
-                $result .= $this->convertBook($item);
-            } elseif ($item instanceof Post) {
-                $result .= $this->convertPost($item);
-            }
+            $result .= $item->accept($this);
+
             $result .= "\n";
         }
 
