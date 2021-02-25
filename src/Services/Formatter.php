@@ -13,7 +13,7 @@ class Formatter
         $format = strtolower($format);
 
         if ($format === 'csv') {
-            $result = (new CSVVistor($items))->execute();
+            $result = (new CSVVisitor($items))->execute();
         } elseif ($format === 'xml') {
             $result = (new XMLVisitor($items))->execute();
         } else {
