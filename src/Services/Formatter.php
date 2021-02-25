@@ -5,25 +5,15 @@ namespace App\Services;
 
 
 
-use InvalidArgumentException;
-
 class Formatter
 {
-    protected $formatters = [
-        'csv' => CSVVistor::class,
-        'xml' => XMLVisitor::class,
-    ];
 
     public function formatAs(array $items, string $format): string
     {
-        $format = strtolower($format);
+        $formatter = FormatterFactory::for($format);
 
-        if (array_key_exists($format, $this->formatters)) {
-            $formatterClass = $this->formatters[$format];
+        $result = (new $formatter($items))->execute();
 
-            return (new $formatterClass($items))->execute();
-        }
-
-        throw new InvalidArgumentException("Format {$format} is not supported");
+        return $result;
     }
 }
